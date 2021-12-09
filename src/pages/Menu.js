@@ -30,8 +30,8 @@ function Menu(props) {
   return (
     <div className="w-full h-screen flex items-center justify-center bg-gray-50">
       <div className='flex flex-col items-center space-y-2 text-center'>
-        <h1 className="text-6xl font-bold">Tic-Tac-Toe</h1>
-        <h2 className="text-4xl font-medium">Minimax Implementation</h2>
+        <h1 className="text-5xl sm:text-6xl font-bold">Tic-Tac-Toe</h1>
+        <h2 className="text-3xl sm:text-4xl font-medium">Minimax Implementation</h2>
         <h3 className="text-xl font-medium pb-4">with Alpha-Beta Pruning</h3>
         <div className="w-full bg-black" style={{height:"2px"}}></div>
         
