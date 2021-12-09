@@ -28,10 +28,14 @@ function Menu(props) {
   }
 
   return (
-    <div>
-      <div className='flex justify-center'>
-        <div className='grid grid-cols-1 gap-y-4 content-center'>
-          <h2 className='text-center text-3xl my-3'>Main Menu</h2>
+    <div className="w-full h-screen flex items-center justify-center bg-gray-50">
+      <div className='flex flex-col items-center space-y-2 text-center'>
+        <h1 className="text-6xl font-bold">Tic-Tac-Toe</h1>
+        <h2 className="text-4xl font-medium">Minimax Implementation</h2>
+        <h3 className="text-xl font-medium pb-4">with Alpha-Beta Pruning</h3>
+        <div className="w-full bg-black" style={{height:"2px"}}></div>
+        
+        <div className="flex flex-col space-y-3 pt-4">
           <div className='flex items-center'>
             <button onClick={toggleUseOptimisationHandler} type='button'
                     className={`${useOptimisation ? 'bg-indigo-600' : 'bg-gray-200'} relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500`}
@@ -43,6 +47,8 @@ function Menu(props) {
               <span className='text-sm font-medium text-gray-900'>Alpha Beta Pruning</span>
             </span>
           </div>
+
+          
           <SelectPlayer onClick={selectPlayerHandler}/>
           <button
             onClick={goToSimulationHandler}

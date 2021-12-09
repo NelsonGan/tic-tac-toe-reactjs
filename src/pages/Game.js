@@ -88,7 +88,7 @@ function Game() {
   }
 
   return (
-    <div>
+    <div className="bg-gray-50">
       <BackButton onClick={backButtonHandler}/>
       <Message text={text}/>
       {!gameEnded ?
