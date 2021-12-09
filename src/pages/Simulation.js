@@ -1,7 +1,7 @@
 import Message from '../components/Message';
 import Board from '../components/Board';
 import {useEffect, useReducer, useState} from 'react';
-import {optimal_move, result, terminal} from '../utils/GameUtilities';
+import {min_value, optimal_move, result, terminal} from '../utils/GameUtilities';
 import BackButton from '../components/BackButton';
 import {useLocation, useNavigate} from 'react-router-dom';
 import MovesProgress from '../components/MovesProgress';
@@ -62,7 +62,7 @@ function Simulation() {
     navigate('/');
   }
 
-  function returnSteps () {
+  function returnSteps() {
     return [
       {
         name: 'Move 1',
@@ -143,8 +143,6 @@ function Simulation() {
           <MovesProgress steps={returnSteps()}/>
         </div>
       </div>
-
-
 
 
     </div>
