@@ -124,9 +124,9 @@ function Simulation() {
   return (
     <div>
       <BackButton onClick={backButtonHandler}/>
-      <div className='flex justify-center space-x-24'>
-        <div className="w-1/2 flex justify-end">
-          <div className='w-96'>
+      <div className='flex md:flex-row flex-col justify-center md:space-x-8 lg:space-x-24 md:space-y-0 space-y-8'>
+        <div className="w-full md:w-3/5 lg:w-1/2 flex justify-center md:justify-end">
+          <div className='w-11/12 sm:w-80'>
             <Message text={text}/>
             <Board board={board}/>
             {!simulationStarted &&
@@ -139,7 +139,7 @@ function Simulation() {
           </div>
         </div>
 
-        <div className="w-1/2 flex justify-start">
+        <div className="w-11/12 mx-auto md:w-2/5 lg:w-1/2 flex justify-start">
           <MovesProgress steps={returnSteps()}/>
         </div>
       </div>
