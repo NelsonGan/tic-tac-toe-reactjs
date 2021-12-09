@@ -1,6 +1,5 @@
 const X = "X";
 const O = "O";
-var statesExplored = 0;
 
 // Return the player who has the next move
 function player(board) {
@@ -97,79 +96,75 @@ function utility(board) {
 }
 
 // Return max value of a board
-function max_value(board) {
+function max_value(board, count) {
   let copyBoard = [...board];
-  if (terminal(copyBoard)) return utility(copyBoard);
+  if (terminal(copyBoard)) return [utility(copyBoard), count + 1];
 
   let temp;
   let value = Number.NEGATIVE_INFINITY;
   const possibleActions = actions(copyBoard);
 
   for (let action = 0; action < possibleActions.length; action++) {
-    temp = min_value(result(copyBoard, possibleActions[action]));
+    [temp, count] = min_value(result(copyBoard, possibleActions[action]), count);
     value = Math.max(value, temp)
   }
 
-  statesExplored += 1;
-  return value;
+  return [value, count + 1];
 }
 
 // Return min value of a board
-function min_value(board) {
+function min_value(board, count) {
   let copyBoard = [...board];
-  if (terminal(copyBoard)) return utility(copyBoard);
+  if (terminal(copyBoard)) return [utility(copyBoard), count + 1];
 
   let temp;
   let value = Number.POSITIVE_INFINITY;
   const possibleActions = actions(copyBoard);
 
   for (let action = 0; action < possibleActions.length; action++) {
-    temp = max_value(result(copyBoard, possibleActions[action]));
+    [temp, count] = max_value(result(copyBoard, possibleActions[action]), count);
     value = Math.min(value, temp);
   }
 
-  statesExplored += 1;
-  return value;
+  return [value, count + 1];
 }
 
-function max_value_abp(board, alpha, beta) {
+function max_value_abp(board, alpha, beta, count) {
   let copyBoard = [...board];
-  if (terminal(copyBoard)) return utility(copyBoard);
+  if (terminal(copyBoard)) return [utility(copyBoard), count + 1];
 
   let value = Number.NEGATIVE_INFINITY;
   let temp;
   const possibleActions = actions(copyBoard);
 
   for (let action = 0; action < possibleActions.length; action++) {
-    temp = min_value_abp(result(copyBoard, possibleActions[action]), alpha, beta);
+    [temp, count] = min_value_abp(result(copyBoard, possibleActions[action]), alpha, beta, count);
     value = Math.max(value, temp);
     alpha = Math.max(alpha, value);
 
     if (alpha > beta) break;
   }
 
-  statesExplored += 1;
-  return value;
+  return [value, count + 1];
 }
 
-function min_value_abp(board, alpha, beta) {
+function min_value_abp(board, alpha, beta, count) {
   let copyBoard = [...board];
-  if (terminal(copyBoard)) return utility(copyBoard);
+  if (terminal(copyBoard)) return [utility(copyBoard), count + 1];
 
   let value = Number.POSITIVE_INFINITY;
   let temp;
   const possibleActions = actions(copyBoard);
 
   for (let action = 0; action < possibleActions.length; action++) {
-    temp = max_value_abp(result(copyBoard, possibleActions[action]), alpha, beta)
+    [temp, count] = max_value_abp(result(copyBoard, possibleActions[action]), alpha, beta, count)
     value = Math.min(value, temp);
     beta = Math.min(value, beta);
 
     if (alpha > beta) break;
   }
 
-  statesExplored += 1;
-  return value;
+  return [value, count + 1];
 }
 
 // Return the optimal action and state explored based on minimax algorithm
@@ -177,7 +172,8 @@ function optimal_move(board, alphaBetaPruning = false) {
   let copyBoard = [...board];
   const playerTurn = player(copyBoard);
   const possibleActions = actions(board);
-  statesExplored = 1;
+  let statesExplored = 0;
+  let tempStatesExplored;
 
   if (terminal(copyBoard)) return null;
 
@@ -187,9 +183,11 @@ function optimal_move(board, alphaBetaPruning = false) {
 
     for (let action = 0; action < possibleActions.length; action++) {
       if (!alphaBetaPruning) {
-        minValue = min_value(result(copyBoard, possibleActions[action]));
+        [minValue, tempStatesExplored] = min_value(result(copyBoard, possibleActions[action]), 0);
+        statesExplored += tempStatesExplored;
       } else {
-        minValue = min_value_abp(result(copyBoard, possibleActions[action]), Number.NEGATIVE_INFINITY, Number.POSITIVE_INFINITY);
+        [minValue, tempStatesExplored] = min_value_abp(result(copyBoard, possibleActions[action]), Number.NEGATIVE_INFINITY, Number.POSITIVE_INFINITY, 0);
+        statesExplored += tempStatesExplored;
       }
 
       if (minValue > maxPlayerValue) {
@@ -207,9 +205,11 @@ function optimal_move(board, alphaBetaPruning = false) {
 
     for (let action = 0; action < possibleActions.length; action++) {
       if (!alphaBetaPruning) {
-        maxValue = max_value(result(copyBoard, possibleActions[action]));
+        [maxValue, tempStatesExplored] = max_value(result(copyBoard, possibleActions[action]), 0);
+        statesExplored += tempStatesExplored;
       } else {
-        maxValue = max_value_abp(result(copyBoard, possibleActions[action]), Number.NEGATIVE_INFINITY, Number.POSITIVE_INFINITY);
+        [maxValue, tempStatesExplored] = max_value_abp(result(copyBoard, possibleActions[action]), Number.NEGATIVE_INFINITY, Number.POSITIVE_INFINITY, 0);
+        statesExplored += tempStatesExplored;
       }
 
       if (maxValue < minPlayerValue) {
