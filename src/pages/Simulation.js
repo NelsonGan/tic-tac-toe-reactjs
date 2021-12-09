@@ -124,20 +124,22 @@ function Simulation() {
   return (
     <div>
       <BackButton onClick={backButtonHandler}/>
-      <div className='flex justify-center'>
-        <div className='mr-32'>
-          <Message text={text}/>
-          <Board board={board}/>
-          {!simulationStarted &&
-          <div className='mt-4 flex justify-center'>
-            <button onClick={() => beginSimulationHandler()}
-                    className='px-6 py-3 border border-transparent text-base font-medium rounded-md text-indigo-700 bg-indigo-100 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'>
-              Begin simulation
-            </button>
-          </div>}
+      <div className='flex justify-center space-x-24'>
+        <div className="w-1/2 flex justify-end">
+          <div className='w-96'>
+            <Message text={text}/>
+            <Board board={board}/>
+            {!simulationStarted &&
+            <div className='mt-4 flex justify-center'>
+              <button onClick={() => beginSimulationHandler()}
+                      className='px-6 py-3 border border-transparent text-base font-medium rounded-md text-indigo-700 bg-indigo-100 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'>
+                Begin simulation
+              </button>
+            </div>}
+          </div>
         </div>
 
-        <div>
+        <div className="w-1/2 flex justify-start">
           <MovesProgress steps={returnSteps()}/>
         </div>
       </div>
