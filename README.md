@@ -2,7 +2,7 @@
 Tic Tac Toe Minimax is an interactive web application that showcases the working of alpha-beta pruning. The app is equipped with an AI opponent that always selects the best optimal move in a tic tac toe match. The app also features a real-time display of the number of states explored in each move, highlighting the significant performance gains achieved with alpha-beta pruning.
 
 ## Tech Stack
-The application was built with ReactJS.
+The application is built with ReactJS.
 
 ## Deployed URL (Vercel)
 https://nelsongan-tic-tac-toe.vercel.app/
